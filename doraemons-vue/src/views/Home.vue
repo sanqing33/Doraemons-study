@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <a v-for="(item, index) in ballList" :key="Home" :href="item.href" class="ball">
-      <div :class="'ball-' + (Home + 1)">
-        <img :alt="'旋转图片' + (Home + 1)" :src="imagePaths.paths[Home]" class="ball-img"/>
+    <a v-for="(item, index) in ballList" :key="index" :href="item.href" class="ball">
+      <div :class="'ball-' + (index + 1)">
+        <img :alt="'旋转图片' + (index + 1)" :src="imagePaths.paths[index]" class="ball-img"/>
         <span class="ball-text">{{ item.text }}</span>
       </div>
     </a>
@@ -36,17 +36,18 @@ const ballList = [
   {text: "点我去看电视", href: ""},
 ];
 
-
 const imagePaths = reactive({
   paths: [],
 });
+
 onMounted(async () => {
   for (let i = 1; i <= ballList.length; i++) {
-    const imagePath = await import(`./img/${i}.jpeg`);
+    const imagePath = await import(`@/assets/home/${i}.jpeg`);
     imagePaths.paths.push(imagePath.default);
   }
 });
 
+//设置组件碰撞反弹
 onMounted(() => {
   const ball = document.querySelectorAll(".ball");
   let divPositions = [];

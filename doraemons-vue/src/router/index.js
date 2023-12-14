@@ -1,32 +1,27 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import Layout from '@/views/index.vue'
-import Login from '@/components/Login.vue'
-import Home from '@/views/Home.vue'
-import CharactIntro from '@/components/CharactIntro.vue'
-import AuthorIntro from '@/components/AuthorIntro.vue'
 
 const routes = [
     {
         path: '/',
-        component: Home
+        component: ()=>import('@/views/Home.vue')
     },
     {
         path: '/charactintro',
-        component: Layout,
+        component: ()=>import('@/views/index.vue'),
         children: [
             {
                 path: '',
-                component: CharactIntro,
+                component: () => import('@/components/CharactIntro.vue'),
             },
             {
                 path: '/authorintro',
-                component: AuthorIntro
+                component: ()=>import('@/components/AuthorIntro.vue'),
             }
         ]
     },
     {
         path: '/login',
-        component: Login
+        component: ()=>import('@/components/Login.vue')
     },
 ]
 
