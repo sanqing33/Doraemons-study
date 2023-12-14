@@ -7,21 +7,21 @@
         <div>
           <div style="font-size: 40px;transform:translateY(-20px);font-weight: bold">登录</div>
           <div style="margin-top: 40px">
-            <el-input v-model="login.username" placeholder="用户名/邮箱" style="width: 70%" type="text">
+            <el-input v-model="login.username" placeholder="用户名/邮箱" style="width: 70%" type="text" @input="this.$forceUpdate()">
               <template #prefix>
                 <el-icon>
                   <User/>
                 </el-icon>
               </template>
             </el-input>
-            <el-input v-model="login.password" placeholder="密码" style="margin-top: 10px;width: 70%" type="password">
+            <el-input v-model="login.password" placeholder="密码" style="margin-top: 10px;width: 70%" type="password" @input="this.$forceUpdate()">
               <template #prefix>
                 <el-icon>
                   <Lock/>
                 </el-icon>
               </template>
             </el-input>
-            <el-input v-model="login.password" placeholder="验证码" style="margin-top: 10px;width: 70%" type="password">
+            <el-input v-model="login.captcha" placeholder="验证码" style="margin-top: 10px;width: 70%" type="password" @input="this.$forceUpdate()">
               <template #prefix>
                 <el-icon>
                   <Check/>
@@ -61,30 +61,28 @@
         <div>
           <div style="font-size: 40px;transform:translateY(-20px);font-weight: bold">注册</div>
           <div style="margin-top: 20px">
-            <el-input v-model="register.username" placeholder="用户名" style="width: 70%" type="text">
+            <el-input v-model="register.username" placeholder="用户名" style="width: 70%" type="text" @input="this.$forceUpdate()">
               <template #prefix>
                 <el-icon>
                   <User/>
                 </el-icon>
               </template>
             </el-input>
-            <el-input v-model="register.email" placeholder="邮箱" style="margin-top: 10px;width: 70%" type="password">
+            <el-input v-model="register.email" placeholder="邮箱" style="margin-top: 10px;width: 70%" type="password" @input="this.$forceUpdate()">
               <template #prefix>
                 <el-icon>
                   <Message/>
                 </el-icon>
               </template>
             </el-input>
-            <el-input v-model="register.password" placeholder="密码" style="margin-top: 10px;width: 70%"
-                      type="password">
+            <el-input v-model="register.password" placeholder="密码" style="margin-top: 10px;width: 70%" type="password" @input="this.$forceUpdate()">
               <template #prefix>
                 <el-icon>
                   <Lock/>
                 </el-icon>
               </template>
             </el-input>
-            <el-input v-model="register.confirmPassword" placeholder="确认密码" style="margin-top: 10px;width: 70%"
-                      type="password">
+            <el-input v-model="register.confirmPassword" placeholder="确认密码" style="margin-top: 10px;width: 70%" type="password" @input="this.$forceUpdate()">
               <template #prefix>
                 <el-icon>
                   <Lock/>
@@ -93,8 +91,7 @@
             </el-input>
           </div>
           <div style="margin-top: 40px">
-            <el-button plain style="width: 60px;transform: translateX(-20px)" type="success"
-                       @click="submitFormRegister">
+            <el-button plain style="width: 60px;transform: translateX(-20px)" type="success" @click="submitFormRegister">
               注册
             </el-button>
             <el-button plain style="width: 60px;transform: translateX(20px)" type="warning" @click="back">
@@ -118,7 +115,7 @@
 <script setup>
 import {onMounted, reactive, ref} from 'vue';
 import {Check, Lock, Message, User} from '@element-plus/icons-vue'
-import router from "@/router";
+import router from "@/router/index.js";
 
 const login = {
   username: '',
@@ -231,7 +228,7 @@ function submitFormLogin() {
     alert.input_alert = true;
   } else {
     if (login.captcha.toLowerCase() === captchaValue.toLowerCase()) {
-      if (login.username === user.username || login.password === user.password) {
+      /*if (login.username === user.username || login.password === user.password) {
         alert.message = user.name;
         alert.login_alert = true;
         localStorage.setItem('username', login.name);
@@ -241,7 +238,16 @@ function submitFormLogin() {
       } else {
         alert.message = '用户名或密码';
         alert.error_alert = true;
-      }
+      }*/
+
+      post('/api/auth/login', {
+        username: login.username,
+        password: login.password
+      }, () => {
+        localStorage.setItem('username', login.name);
+        router.push({path: '/'});
+      })
+
     } else {
       alert.message = '验证码';
       alert.error_alert = true;
