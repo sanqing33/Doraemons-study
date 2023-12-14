@@ -20,6 +20,7 @@
       </svg>
     </div>
   </div>
+  <RouterView/>
 </template>
 
 <script setup>
@@ -87,4 +88,3 @@ if (localStorage.getItem('username')) {
   }
 }
 </style>
-

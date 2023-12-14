@@ -1,5 +1,5 @@
 <template>
-  <img alt="" src="@/assets/Doraemon/21.jpg">
+  <img alt="" src="../assets/Doraemon/21.jpg">
 </template>
 
 <script setup>

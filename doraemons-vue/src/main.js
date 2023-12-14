@@ -1,5 +1,6 @@
 import './styles/normalize.css'
 import './styles/icon.css'
+import 'element-plus/dist/index.css'
 
 import {createApp} from 'vue'
 

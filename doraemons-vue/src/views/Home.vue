@@ -1,13 +1,13 @@
 <template>
   <div class="home">
-    <a v-for="(item, index) in ballList" :key="index" :href="item.href" class="ball">
-      <div :class="'ball-' + (index + 1)">
-        <img :alt="'旋转图片' + (index + 1)" :src="imagePaths.paths[index]" class="ball-img"/>
+    <a v-for="(item, index) in ballList" :key="Home" :href="item.href" class="ball">
+      <div :class="'ball-' + (Home + 1)">
+        <img :alt="'旋转图片' + (Home + 1)" :src="imagePaths.paths[Home]" class="ball-img"/>
         <span class="ball-text">{{ item.text }}</span>
       </div>
     </a>
     <div id="hello">
-      <img alt="" src="@/assets/cloud.png"/>
+      <img alt="" src="../assets/cloud.png"/>
       <span>
         欢迎用户
         <router-link style="color: white" to="/login">{{ username }}</router-link>

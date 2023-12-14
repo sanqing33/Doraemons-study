@@ -1,9 +1,9 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import Layout from '@/views/Layout/index.vue'
-import Login from '@/views/Login/index.vue'
-import Home from '@/views/Home/index.vue'
-import CharactIntro from '@/views/Home/components/CharactIntro.vue'
-import AuthorIntro from '@/views/Home/components/AuthorIntro.vue'
+import Layout from '@/views/index.vue'
+import Login from '@/components/Login.vue'
+import Home from '@/views/Home.vue'
+import CharactIntro from '@/components/CharactIntro.vue'
+import AuthorIntro from '@/components/AuthorIntro.vue'
 
 const routes = [
     {
