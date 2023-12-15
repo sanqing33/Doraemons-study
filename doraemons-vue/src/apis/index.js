@@ -1,13 +1,15 @@
 import axios from "axios";
 import {ElMessage} from "element-plus";
 
-const defaultError = (error, message) => {
+const defaultError = (error) => {
     if (error.response) {
-        ElMessage.error(message)
+        ElMessage.error(error.response.data.message);
+
     } else {
-        ElMessage.error('请求错误')
+        ElMessage.error('请求错误');
     }
-}
+};
+
 const defaultFailure = (message) => ElMessage.warning(message)
 
 function post(url, data, success, failure = defaultFailure, error = defaultError) {
