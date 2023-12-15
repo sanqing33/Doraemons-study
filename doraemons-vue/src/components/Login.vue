@@ -4,30 +4,27 @@
 
     <div id="login">
       <div :class="{ loginflip: alert.isFlipped }" class="login">
-        <div>
+        <div style="width: 70%">
           <div style="font-size: 40px;transform:translateY(-20px);font-weight: bold">登录</div>
           <div style="margin-top: 40px">
-            <el-input v-model="login.username" placeholder="用户名/邮箱" style="width: 70%" type="text" @input="this.$forceUpdate()">
-              <template #prefix>
-                <el-icon>
-                  <User/>
-                </el-icon>
-              </template>
-            </el-input>
-            <el-input v-model="login.password" placeholder="密码" style="margin-top: 10px;width: 70%" type="password" @input="this.$forceUpdate()">
-              <template #prefix>
-                <el-icon>
-                  <Lock/>
-                </el-icon>
-              </template>
-            </el-input>
-            <el-input v-model="login.captcha" placeholder="验证码" style="margin-top: 10px;width: 70%" type="text" @input="this.$forceUpdate()">
-              <template #prefix>
-                <el-icon>
-                  <Check/>
-                </el-icon>
-              </template>
-            </el-input>
+            <div>
+              <el-icon style="transform: translate(10px,4px);z-index: 1">
+                <User/>
+              </el-icon>
+              <input v-model="login.username" placeholder="用户名/邮箱" style="width: 90%" type="text">
+            </div>
+            <div>
+              <el-icon style="transform: translate(10px,4px);z-index: 1">
+                <Lock/>
+              </el-icon>
+              <input v-model="login.password" placeholder="密码" style="margin-top: 10px;width: 90%" type="password">
+            </div>
+            <div>
+              <el-icon style="transform: translate(10px,4px);z-index: 1">
+                <Check/>
+              </el-icon>
+              <input v-model="login.captcha" placeholder="验证码" style="margin-top: 10px;width: 90%" type="text">
+            </div>
             <div style="margin-top: 15px;">
               <canvas ref="captchaCanvas" height="50" style="border-radius: 8px" width="150" @click="refreshCaptcha">
               </canvas>
@@ -58,57 +55,53 @@
         <img alt="Register Image" src="../assets/Doraemon/register.png">
       </div>
       <div :class="{ registerflip: alert.isFlipped2 }" class="register">
-        <div>
+        <div style="width: 70%">
           <div style="font-size: 40px;transform:translateY(-20px);font-weight: bold">注册</div>
           <div style="margin-top: 20px">
-            <el-input v-model="register.username" placeholder="用户名" style="width: 70%" type="text" @input="this.$forceUpdate()">
-              <template #prefix>
-                <el-icon>
-                  <User/>
-                </el-icon>
-              </template>
-            </el-input>
-            <el-input v-model="register.email" placeholder="邮箱(用于登录或找回密码)" style="margin-top: 10px;width: 70%" type="text" @input="this.$forceUpdate()">
-              <template #prefix>
-                <el-icon>
-                  <Message/>
-                </el-icon>
-              </template>
-            </el-input>
-            <el-input v-model="register.password" placeholder="密码" style="margin-top: 10px;width: 70%" type="password" @input="this.$forceUpdate()">
-              <template #prefix>
-                <el-icon>
-                  <Lock/>
-                </el-icon>
-              </template>
-            </el-input>
-            <el-input v-model="register.confirmPassword" placeholder="确认密码" style="margin-top: 10px;width: 70%" type="password" @input="this.$forceUpdate()">
-              <template #prefix>
-                <el-icon>
-                  <Lock/>
-                </el-icon>
-              </template>
-            </el-input>
-          </div>
-          <div style="margin-top: 40px">
-            <el-button plain style="width: 60px;transform: translateX(-20px)" type="success" @click="submitFormRegister">
-              注册
-            </el-button>
-            <el-button plain style="width: 60px;transform: translateX(20px)" type="warning" @click="back">
-              返回
-            </el-button>
+            <div>
+              <el-icon style="transform: translate(10px,4px);z-index: 1">
+                <User/>
+              </el-icon>
+              <input v-model="register.username" placeholder="用户名" style="width: 90%" type="text">
+            </div>
+            <div>
+              <el-icon style="transform: translate(10px,4px);z-index: 1">
+                <Message/>
+              </el-icon>
+              <input v-model="register.email" placeholder="邮箱(用于登录或找回密码)" style="margin-top: 10px;width: 90%" type="text">
+            </div>
+            <div>
+              <el-icon style="transform: translate(10px,4px);z-index: 1">
+                <Lock/>
+              </el-icon>
+              <input v-model="register.password" placeholder="密码" style="margin-top: 10px;width: 90%" type="password">
+            </div>
+            <div>
+              <el-icon style="transform: translate(10px,4px);z-index: 1">
+                <Lock/>
+              </el-icon>
+              <input v-model="register.confirmPassword" placeholder="确认密码" style="margin-top: 10px;width: 90%" type="password">
+            </div>
+            <div style="margin-top: 40px">
+              <el-button plain style="width: 60px;transform: translateX(-20px)" type="success" @click="submitFormRegister">
+                注册
+              </el-button>
+              <el-button plain style="width: 60px;transform: translateX(20px)" type="warning" @click="back">
+                返回
+              </el-button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div v-if="alert.input_alert || alert.error_alert || alert.login_alert || alert.exist_alert || alert.register_alert" class="alert">
-      <h1 v-if="alert.input_alert">请输入<br>{{ alert.message }}</h1>
-      <h1 v-else-if="alert.error_alert">{{ alert.message }}错误<br>请重新输入</h1>
-      <h1 v-else-if="alert.login_alert">登录成功<br>欢迎用户{{ alert.message }}</h1>
-      <h1 v-else-if="alert.exist_alert">用户名或邮箱已存在</h1>
-      <h1 v-else-if="alert.register_alert">注册成功</h1>
-      <el-button plain style="width: 60px" type="danger" @click="close">确定</el-button>
+      <div v-if="alert.input_alert || alert.error_alert || alert.login_alert || alert.exist_alert || alert.register_alert" class="alert">
+        <h1 v-if="alert.input_alert">请输入<br>{{ alert.message }}</h1>
+        <h1 v-else-if="alert.error_alert">{{ alert.message }}错误<br>请重新输入</h1>
+        <h1 v-else-if="alert.login_alert">登录成功<br>欢迎用户{{ alert.message }}</h1>
+        <h1 v-else-if="alert.exist_alert">用户名或邮箱已存在</h1>
+        <h1 v-else-if="alert.register_alert">注册成功</h1>
+        <el-button plain style="width: 60px" type="danger" @click="close">确定</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -314,6 +307,19 @@ function back() {
     top: 3%;
   }
 
+  input {
+    padding: 8px 25px;
+    width: 100%;
+    flex-grow: 1;
+    border-radius: 5px;
+    height: var(--el-input-inner-height);
+    line-height: var(--el-input-inner-height);
+    outline: 0;
+    border: none;
+    box-sizing: border-box;
+    font-size: 12px;
+    transform: translateX(-10px);
+  }
 
   img {
     max-width: 75%;

@@ -2,7 +2,6 @@ package com.doraemons.config;
 
 import com.alibaba.fastjson.JSONObject;
 import com.doraemons.entity.RestBean;
-import com.doraemons.mapper.UserMapper;
 import com.doraemons.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,9 +28,6 @@ public class SecurityConfiguration {
     @Resource
     UserService userService;
 
-    @Resource
-    UserMapper mapper;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
@@ -43,6 +39,9 @@ public class SecurityConfiguration {
                 .loginProcessingUrl("/api/auth/login")
                 .successHandler(this::onAuthenticationSuccess)
                 .failureHandler(this::onAuthenticationFailure)
+                .and()
+                .logout()
+                .logoutUrl("/api/auth/logout")
                 .and()
                 .userDetailsService(userService)
                 .csrf()
@@ -69,15 +68,6 @@ public class SecurityConfiguration {
         return source;
     }
 
-    //明文转密文
-    /*BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    System.out.println(encoder.encode("sqing"));*/
-    //密码编码器
-    /*@Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }*/
-
     //不进行任何加密的密码编码器
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -86,8 +76,11 @@ public class SecurityConfiguration {
 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         response.setCharacterEncoding("utf-8");
-        String name = UserService.name;
-        response.getWriter().write(JSONObject.toJSONString(RestBean.success(name)));
+        if (request.getRequestURI().endsWith("/login")) {
+            String name = UserService.name;
+            response.getWriter().write(JSONObject.toJSONString(RestBean.success(name)));
+        } else if (request.getRequestURI().endsWith("/logout"))
+            response.getWriter().write(JSONObject.toJSONString(RestBean.success("退出登录成功")));
     }
 
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
