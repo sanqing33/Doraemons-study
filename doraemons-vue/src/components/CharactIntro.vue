@@ -15,7 +15,7 @@
           <img :src="currentCharacter.img" alt="人物图片">
           <ul>
             <li v-for="info in characterInfo" :key="info.label">
-              <span>{{ info.label }}：</span><span v-html="formatValue(info.value)"></span>
+              <span>{{ info.label }}：</span><span style="font-family: 'jam font', serif" v-html="formatValue(info.value)"></span>
             </li>
           </ul>
         </div>
@@ -181,7 +181,6 @@ console.log(characterInfo)
         margin-bottom: 10px;
 
         span {
-          font-family: "jam font", sans-serif;
           color: rgb(27, 160, 225);
           font-size: 22px;
           display: inline-block;

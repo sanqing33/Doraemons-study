@@ -1,7 +1,13 @@
 import axios from "axios";
 import {ElMessage} from "element-plus";
 
-const defaultError = () => ElMessage.error('发生了一些错误，请联系管理员')
+const defaultError = (error, message) => {
+    if (error.response) {
+        ElMessage.error(message)
+    } else {
+        ElMessage.error('请求错误')
+    }
+}
 const defaultFailure = (message) => ElMessage.warning(message)
 
 function post(url, data, success, failure = defaultFailure, error = defaultError) {
@@ -11,7 +17,7 @@ function post(url, data, success, failure = defaultFailure, error = defaultError
         },
         withCredentials: true
     }).then(({data}) => {
-        if(data.success)
+        if (data.success)
             success(data.message, data.status)
         else
             failure(data.message, data.status)
@@ -22,11 +28,11 @@ function get(url, success, failure = defaultFailure, error = defaultError) {
     axios.get(url, {
         withCredentials: true
     }).then(({data}) => {
-        if(data.success)
+        if (data.success)
             success(data.message, data.status)
         else
             failure(data.message, data.status)
     }).catch(error)
 }
 
-export { get, post }
+export {get, post}

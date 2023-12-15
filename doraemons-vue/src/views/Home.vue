@@ -193,14 +193,6 @@ body {
   }
 }
 
-
-@font-face {
-  font-family: "jam font";
-  src: url("@/ttf/jamfont.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
 #hello {
   position: absolute;
   z-index: 1;

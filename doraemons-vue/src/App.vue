@@ -19,6 +19,13 @@
     font-family: 幼圆, sans-serif;
     overflow: hidden;
   }
+
+  @font-face {
+    font-family: "jam font";
+    src: url("@/ttf/jamfont.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
 }
 
 </style>

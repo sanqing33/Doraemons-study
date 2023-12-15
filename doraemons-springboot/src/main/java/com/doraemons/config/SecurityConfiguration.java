@@ -32,6 +32,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests()
+                .requestMatchers("/api/auth/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -80,7 +81,6 @@ public class SecurityConfiguration {
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
-
 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         response.setCharacterEncoding("utf-8");
