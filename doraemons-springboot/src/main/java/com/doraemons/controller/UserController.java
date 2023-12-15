@@ -37,7 +37,9 @@ public class UserController {
             // 执行插入操作，将新用户信息保存到数据库中
             mapper.addUser(newUser);
 
-            return ResponseEntity.ok().body(JSONObject.toJSONString(RestBean.success("注册成功")));
+            String name = mapper.findFullNameByUsernameOrEmail(username);
+
+            return ResponseEntity.ok().body(JSONObject.toJSONString(RestBean.loginsuccess("注册成功", name)));
         }
 
     }

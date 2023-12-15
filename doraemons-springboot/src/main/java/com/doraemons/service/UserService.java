@@ -11,13 +11,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService implements UserDetailsService {
 
+    public static String name;
+
     @Resource
     UserMapper mapper;
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = mapper.findUserByNameOrEmail(username);
+        name = mapper.findFullNameByUsernameOrEmail(username);
+
         if (user == null)
             throw new UsernameNotFoundException("用户名或密码错误");
+
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())

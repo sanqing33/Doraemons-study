@@ -102,10 +102,11 @@
       </div>
     </div>
 
-    <div v-if="alert.input_alert || alert.error_alert || alert.login_alert || alert.register_alert" class="alert">
+    <div v-if="alert.input_alert || alert.error_alert || alert.login_alert || alert.exist_alert || alert.register_alert" class="alert">
       <h1 v-if="alert.input_alert">请输入<br>{{ alert.message }}</h1>
       <h1 v-else-if="alert.error_alert">{{ alert.message }}错误<br>请重新输入</h1>
       <h1 v-else-if="alert.login_alert">登录成功<br>欢迎用户{{ alert.message }}</h1>
+      <h1 v-else-if="alert.exist_alert">用户名或邮箱已存在</h1>
       <h1 v-else-if="alert.register_alert">注册成功</h1>
       <el-button plain style="width: 60px" type="danger" @click="close">确定</el-button>
     </div>
@@ -117,7 +118,6 @@ import {onMounted, reactive, ref} from 'vue';
 import {Check, Lock, Message, User} from '@element-plus/icons-vue'
 import router from "@/router/index.js";
 import {post} from "@/apis/index.js";
-import {ElMessage} from "element-plus";
 
 const login = {
   username: '',
@@ -212,6 +212,7 @@ const alert = reactive({
   input_alert: false,
   error_alert: false,
   login_alert: false,
+  exist_alert: false,
   register_alert: false,
   message: '',
   isFlipped: false,
@@ -230,26 +231,17 @@ function submitFormLogin() {
     alert.input_alert = true;
   } else {
     if (login.captcha.toLowerCase() === captchaValue.toLowerCase()) {
-      /*if (login.username === user.username || login.password === user.password) {
-        alert.message = user.name;
-        alert.login_alert = true;
-        localStorage.setItem('username', login.name);
-        setTimeout(() => {
-          router.push({path: '/'})
-        }, 2000);
-      } else {
-        alert.message = '用户名或密码';
-        alert.error_alert = true;
-      }*/
-
       post('/api/auth/login', {
         username: login.username,
         password: login.password
-      }, () => {
-        localStorage.setItem('username', login.name);
-        router.push({path: '/'});
+      }, (name) => {
+        alert.message = name;
+        alert.login_alert = true;
+        setTimeout(() => {
+          localStorage.setItem('username', name);
+          router.push({path: '/'});
+        }, 2000);
       })
-
     } else {
       alert.message = '验证码';
       alert.error_alert = true;
@@ -273,16 +265,11 @@ function submitFormRegister() {
       username: register.username,
       email: register.email,
       password: register.password
-    }, (message) => {
-      if (message.includes("已存在")) {
-        // 用户名或邮箱已存在，提示错误信息
-        ElMessage.warning(message)
-      } else {
-        // 注册成功，跳转到登录页面
-        ElMessage.success(message)
-        alert.register_alert = true;
-        back();
-      }
+    }, () => {
+      alert.register_alert = true;
+      back();
+    }, () => {
+      alert.exist_alert = true;
     })
   }
 }
@@ -291,6 +278,7 @@ function close() {
   alert.input_alert = false;
   alert.error_alert = false;
   alert.login_alert = false;
+  alert.exist_alert = false;
   alert.register_alert = false;
 }
 
