@@ -7,21 +7,24 @@
         <div>
           <div style="font-size: 40px;transform:translateY(-20px);font-weight: bold">登录</div>
           <div style="margin-top: 40px">
-            <el-input v-model="login.username" placeholder="用户名/邮箱" style="width: 70%" type="text" @input="this.$forceUpdate()">
+            <el-input v-model="login.username" placeholder="用户名/邮箱" style="width: 70%" type="text"
+                      @input="this.$forceUpdate()">
               <template #prefix>
                 <el-icon>
                   <User/>
                 </el-icon>
               </template>
             </el-input>
-            <el-input v-model="login.password" placeholder="密码" style="margin-top: 10px;width: 70%" type="password" @input="this.$forceUpdate()">
+            <el-input v-model="login.password" placeholder="密码" style="margin-top: 10px;width: 70%" type="password"
+                      @input="this.$forceUpdate()">
               <template #prefix>
                 <el-icon>
                   <Lock/>
                 </el-icon>
               </template>
             </el-input>
-            <el-input v-model="login.captcha" placeholder="验证码" style="margin-top: 10px;width: 70%" type="password" @input="this.$forceUpdate()">
+            <el-input v-model="login.captcha" placeholder="验证码" style="margin-top: 10px;width: 70%" type="text"
+                      @input="this.$forceUpdate()">
               <template #prefix>
                 <el-icon>
                   <Check/>
@@ -61,28 +64,32 @@
         <div>
           <div style="font-size: 40px;transform:translateY(-20px);font-weight: bold">注册</div>
           <div style="margin-top: 20px">
-            <el-input v-model="register.username" placeholder="用户名" style="width: 70%" type="text" @input="this.$forceUpdate()">
+            <el-input v-model="register.username" placeholder="用户名" style="width: 70%" type="text"
+                      @input="this.$forceUpdate()">
               <template #prefix>
                 <el-icon>
                   <User/>
                 </el-icon>
               </template>
             </el-input>
-            <el-input v-model="register.email" placeholder="邮箱" style="margin-top: 10px;width: 70%" type="password" @input="this.$forceUpdate()">
+            <el-input v-model="register.email" placeholder="邮箱" style="margin-top: 10px;width: 70%" type="password"
+                      @input="this.$forceUpdate()">
               <template #prefix>
                 <el-icon>
                   <Message/>
                 </el-icon>
               </template>
             </el-input>
-            <el-input v-model="register.password" placeholder="密码" style="margin-top: 10px;width: 70%" type="password" @input="this.$forceUpdate()">
+            <el-input v-model="register.password" placeholder="密码" style="margin-top: 10px;width: 70%" type="password"
+                      @input="this.$forceUpdate()">
               <template #prefix>
                 <el-icon>
                   <Lock/>
                 </el-icon>
               </template>
             </el-input>
-            <el-input v-model="register.confirmPassword" placeholder="确认密码" style="margin-top: 10px;width: 70%" type="password" @input="this.$forceUpdate()">
+            <el-input v-model="register.confirmPassword" placeholder="确认密码" style="margin-top: 10px;width: 70%"
+                      type="password" @input="this.$forceUpdate()">
               <template #prefix>
                 <el-icon>
                   <Lock/>
@@ -91,7 +98,8 @@
             </el-input>
           </div>
           <div style="margin-top: 40px">
-            <el-button plain style="width: 60px;transform: translateX(-20px)" type="success" @click="submitFormRegister">
+            <el-button plain style="width: 60px;transform: translateX(-20px)" type="success"
+                       @click="submitFormRegister">
               注册
             </el-button>
             <el-button plain style="width: 60px;transform: translateX(20px)" type="warning" @click="back">
@@ -116,6 +124,7 @@
 import {onMounted, reactive, ref} from 'vue';
 import {Check, Lock, Message, User} from '@element-plus/icons-vue'
 import router from "@/router/index.js";
+import {post} from "@/apis/index.js";
 
 const login = {
   username: '',
